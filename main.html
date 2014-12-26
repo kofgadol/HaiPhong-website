@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hai-Phong</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<H1>Hai-Phong123</H1>
+<div id="dvContent">
+    <textarea id="taResult" rows="10"></textarea><br/>
+    <div id="dvTable"></div>
+</div>
+<script src="js/jquery-2.0.3.js"></script>
+<script src="js/csv2json.js"></script>
+<script src="node_modules/lodash/dist/lodash.underscore.js"></script>
+<script>
+    var Page = {};
+
+    Page.load=function(){
+        var jqxhr = $.ajax( "menu.csv" ).done(function(res) {
+            console.log( "success" );
+            //console.log(res);
+            var obj = Page.convertCsv2Json(res);
+            data=obj;
+            Page.generateTable2(obj);
+
+        }).fail(function(e) {
+            alert( "error" );
+            console.log(e);
+        }).always(function() {
+            console.log( "complete" );
+        });
+    };
+
+    Page.convertCsv2Json = function(csvStr){
+        var jsonStr=csv2json(csvStr);
+       $("#taResult").text(jsonStr);
+       var obj=JSON.parse(jsonStr);
+        k=obj;
+       //console.log(obj);
+        //Page.generateTable(obj);
+
+        return obj;
+    }
+
+    Page.generateTable=function(data){
+        var html="<table>";
+        html+="<thead><tr><th>dish</th><th>price</th><th class='rtl'>מנה</th><th>category</th></tr></thead>";
+        html+="<tbody>"
+        for(var i=0;i<data.length;i++){
+            html+="<tr>";
+            html+=" <td>"+ data[i].dish_en+"</td>"
+            html+=" <td class='center'>"+ data[i].price+"</td>"
+            html+=" <td class='rtl'>"+ data[i].dish_he+"</td>"
+            html+=" <td>"+ data[i].category+"</td>"
+            html+="</tr>";
+        }
+
+        html+="</tbody>"
+        html+="</table>";
+
+        $('#dvTable').html(html);
+    }
+
+    Page.generateTable2=function(data){
+        //html="123456";
+
+
+        //var list = '<% _.each(people, function(name) { %><li><%- name %></li><% }); %>';
+        var template1 = '<ul>'+
+        '<% for(var people in peoples) { %>'+
+        '<li><%= peoples[people] %></li>'+
+        '<% } %>'+
+        '</ul>';
+        //var html=_.template(list, { 'peoples': ['fred', 'barney'] });
+        //var html=_.template(template1, { 'peoples': ['fred', 'barney'] });
+
+
+        //var compiled = _.template('hello <%= name %>', null, { 'sourceURL': '/basic/greeting.jst' });
+        var dishData = {
+            dishes:data
+        }
+        var compiled = _.template('hello <%= name %>', null, { 'sourceURL': '/dishMenuTemplate.html' });
+        var html=_.template("",dishData,{ 'sourceURL': 'dishMenuTemplate.html' });
+        html = compiled(dishData);
+        $('#dvTable').html(html);
+    }
+
+    Page.load();
+</script>
+</body>
+</html>

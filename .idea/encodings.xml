@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/css/main.css" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/dish_menu.html" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/js/csv2json.js" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/js/jquery-2.0.3.js" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/main.html" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
+
